@@ -14,7 +14,8 @@ app.get('/', function (req, res) {
 	const dir = `${drive}/${req.query.folder}` || 'COURSES'
 
 	const files = fs.readdirSync(dir).filter((file)=>{
-		return file.includes('.mp4')
+		// return file.includes('.mp4')
+		return file
 	})
 
 	res.json({files, dir})

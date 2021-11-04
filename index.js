@@ -14,10 +14,19 @@ app.get('/', function (req, res) {
 	// const dir = `${drive}/${req.query.folder}` || 'COURSES'
 	const dir = `${req.query.folder}` || 'COURSES'
 
-	const files = fs.readdirSync(dir).filter((file)=>{
-		// return file.includes('.mp4')
-		return file
-	})
+	let files = fs.readdirSync(dir)
+
+	/*file number weird sorting case*/
+	/*mapping the (regex extract) first digits(decimal) as id for sorting*/
+	files = files.map(file=>({ id: file.match(/^\D*(\d+(?:\.\d+)?)/)[0], file: file }))
+
+	/*sorting the id (digit)*/
+	files.sort(function (a, b) {
+	  return a.id - b.id;
+	});
+
+	/*front end expecting simple non object list -- for the case */
+	files = files.map(file=>file.file)
 
 	res.json({files, dir})
 });

@@ -16,9 +16,18 @@ app.get('/', function (req, res) {
 
 	let files = fs.readdirSync(dir)
 
+
 	/*file number weird sorting case*/
 	/*mapping the (regex extract) first digits(decimal) as id for sorting*/
-	files = files.map(file=>({ id: file.match(/^\D*(\d+(?:\.\d+)?)/)[0], file: file }))
+	files = files.map((file,index)=>{
+
+		/*unmatched condition...*/
+		let match = file.match(/^\D*(\d+(?:\.\d+)?)/)
+		let id=index;
+		if(match){id=match[0]}
+
+		return { id: id, file: file }
+	})
 
 	/*sorting the id (digit)*/
 	files.sort(function (a, b) {

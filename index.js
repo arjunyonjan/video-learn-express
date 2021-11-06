@@ -12,8 +12,8 @@ app.get('/', function (req, res) {
 
 	const drive = req.query.drive || 'E:'
 	// const dir = `${drive}/${req.query.folder}` || 'COURSES'
-	const dir = `${req.query.folder}` || 'COURSES'
-
+	const dir = `${req.query.folder.trim()}` || 'COURSES'
+	
 	let files = fs.readdirSync(dir)
 
 
